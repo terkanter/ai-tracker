@@ -1,0 +1,6 @@
+{
+  "notFound": "Organization not found",
+  "memberExists": "User is already a member of this organization",
+  "memberNotFound": "Member not found",
+  "insufficientPermissions": "Insufficient permissions"
+}

@@ -1,0 +1,133 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-tracker-back
+    image: ai-tracker-back:latest
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - IS_WORKER=false
+    ports:
+      - '${APP_PORT}:${APP_PORT}'
+    networks:
+      - ai-tracker-back-network
+    depends_on:
+      - redis
+      - minio
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-tracker-back-worker
+    image: ai-tracker-back-worker:latest
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - IS_WORKER=true
+    ports:
+      - '${APP_WORKER_PORT}:${APP_WORKER_PORT}'
+    networks:
+      - ai-tracker-back-network
+    depends_on:
+      - redis
+      - minio
+
+  prometheus:
+    image: prom/prometheus:v3.0.1
+    container_name: ai-tracker-back-prometheus
+    restart: unless-stopped
+    ports:
+      - ${DOCKER_PROMETHEUS_PORT}:9090
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yaml'
+    volumes:
+      - ./prometheus.config.yml:/etc/prometheus/prometheus.yaml:ro
+    networks:
+      - ai-tracker-back-network
+    profiles:
+      - monitoring
+    depends_on:
+      - setup_prometheus
+
+  grafana:
+    image: grafana/grafana-oss:11.3.1
+    container_name: ai-tracker-back-grafana
+    restart: unless-stopped
+    ports:
+      - '${DOCKER_GRAFANA_PORT}:3000'
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+    volumes:
+      - ./src/tools/grafana/provisioning:/etc/grafana/provisioning
+      - ./src/tools/grafana/dashboards:/var/lib/grafana/dashboards
+    networks:
+      - ai-tracker-back-network
+    profiles:
+      - monitoring
+    depends_on:
+      - prometheus
+      - setup_grafana
+
+  # Solution to fix prometheus volume permission issue
+  setup_prometheus:
+    image: prom/prometheus:v3.0.1
+    container_name: ai-tracker-back-setup-prometheus
+    restart: no
+    user: root
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        chown -R 65534:65534 /prometheus
+    volumes:
+      - ./.docker/prometheus-data:/prometheus
+    profiles:
+      - monitoring
+
+  # Solution to fix grafana volume permission issue
+  setup_grafana:
+    image: grafana/grafana-oss:11.3.1
+    container_name: ai-tracker-back-setup-grafana
+    restart: no
+    user: root
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        chown -R 65534:65534 /var/lib/grafana
+    volumes:
+      - ./.docker/grafana-data:/var/lib/grafana
+    profiles:
+      - monitoring
+
+  minio:
+    image: minio/minio:latest
+    container_name: ai-tracker-back-minio
+    restart: unless-stopped
+    ports:
+      - '${DOCKER_MINIO_API_PORT:-9000}:9000'
+      - '${DOCKER_MINIO_CONSOLE_PORT:-9001}:9001'
+    environment:
+      MINIO_ROOT_USER: '${MINIO_ROOT_USER:-minioadmin}'
+      MINIO_ROOT_PASSWORD: '${MINIO_ROOT_PASSWORD:-minioadmin}'
+    volumes:
+      - ./.docker/minio_data:/data
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    networks:
+      - ai-tracker-back-network
+
+networks:
+  ai-tracker-back-network:
+    name: ai-tracker-back-network
+    driver: bridge

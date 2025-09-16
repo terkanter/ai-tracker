@@ -1,0 +1,108 @@
+{
+  "meta": {
+    "title": "Site title",
+    "description": "Site description"
+  },
+  "Error": {
+    "title": "Something went wrong!",
+    "description": "<p>We've unfortunately encountered an error.</p><p>You can try to <retry>reload the page</retry> you were visiting.</p>"
+  },
+  "IndexPage": {
+    "description": "This is a basic example that demonstrates the usage of <code>next-intl</code> with the Next.js App Router. Try changing the locale in the top right corner and see how the content changes.",
+    "title": "Index page"
+  },
+  "LocaleLayout": {
+    "title": "next-intl example"
+  },
+  "LocaleSwitcher": {
+    "label": "Change language",
+    "locale": "{locale, select, de {🇩🇪 Deutsch} en {🇺🇸 English} other {Unknown}}"
+  },
+  "Manifest": {
+    "name": "Site name"
+  },
+  "Navigation": {
+    "home": "Home",
+    "pathnames": "Pathnames"
+  },
+  "NotFoundPage": {
+    "description": "Please double-check the browser address bar or use the navigation to go to a known page.",
+    "title": "Page not found"
+  },
+  "Auth": {
+    "signin": {
+      "title": "Sign In",
+      "description": "Welcome back! Please sign in to your account.",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot password?",
+      "submitButton": "Sign In",
+      "footerText": "Don't have an account?",
+      "footerLink": "Sign up",
+      "errors": {
+        "invalidCredentials": "Invalid email or password",
+        "networkError": "Network error occurred",
+        "unexpectedError": "An unexpected error occurred"
+      }
+    },
+    "signup": {
+      "title": "Create Account",
+      "description": "Join us today! Create your account to get started.",
+      "name": "Full Name",
+      "namePlaceholder": "Enter your full name",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "username": "Username",
+      "usernamePlaceholder": "Choose a username",
+      "password": "Password",
+      "passwordPlaceholder": "Create a password",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm your password",
+      "acceptTerms": "I agree to the {termsLink} and {privacyLink}",
+      "termsLink": "Terms and Conditions",
+      "privacyLink": "Privacy Policy",
+      "submitButton": "Create Account",
+      "footerText": "Already have an account?",
+      "footerLink": "Sign in",
+      "errors": {
+        "passwordMismatch": "Passwords do not match",
+        "termsRequired": "You must accept the terms and conditions",
+        "emailExists": "Email already exists",
+        "usernameExists": "Username already taken",
+        "weakPassword": "Password is too weak",
+        "unexpectedError": "An unexpected error occurred"
+      }
+    },
+    "forgotPassword": {
+      "title": "Forgot Password",
+      "description": "Enter your email address and we'll send you a link to reset your password.",
+      "successTitle": "Check Your Email",
+      "successDescription": "We've sent a password reset link to your email address.",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "submitButton": "Send Reset Link",
+      "backToSignin": "Back to Sign In",
+      "footerText": "Remember your password?",
+      "footerLink": "Sign in",
+      "errors": {
+        "emailNotFound": "Email address not found",
+        "rateLimited": "Too many requests. Please try again later",
+        "unexpectedError": "An unexpected error occurred"
+      }
+    },
+    "logout": {
+      "title": "Signing you out...",
+      "titleFailed": "Sign out failed",
+      "description": "Please wait while we sign you out.",
+      "descriptionFailed": "There was an issue signing you out. Please try again.",
+      "tryAgain": "Try Again"
+    },
+    "modal": {
+      "close": "Close"
+    }
+  },
+  "PageLayout": {}
+}

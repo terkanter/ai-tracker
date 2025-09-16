@@ -1,0 +1,49 @@
+import { registerAs } from '@nestjs/config';
+
+import { IsOptional, IsString } from 'class-validator';
+import validateConfig from '../../utils/config/validate-config';
+import { AwsConfig } from './aws-config.types';
+
+class EnvironmentVariablesValidator {
+  @IsString()
+  @IsOptional()
+  AWS_REGION: string;
+
+  @IsString()
+  @IsOptional()
+  AWS_KEY: string;
+
+  @IsString()
+  @IsOptional()
+  AWS_SECRET: string;
+
+  @IsString()
+  @IsOptional()
+  AWS_S3_BUCKET: string;
+
+  @IsString()
+  @IsOptional()
+  AWS_ENDPOINT: string;
+
+  @IsString()
+  @IsOptional()
+  AWS_FORCE_PATH_STYLE: string;
+}
+
+export function getConfig(): AwsConfig {
+  return {
+    region: process.env.AWS_REGION,
+    accessKey: process.env.AWS_KEY,
+    secretKey: process.env.AWS_SECRET,
+    bucket: process.env.AWS_S3_BUCKET,
+    endpoint: process.env.AWS_ENDPOINT,
+    forcePathStyle: process.env.AWS_FORCE_PATH_STYLE === 'true' || true, // MinIO requires path-style
+  };
+}
+
+export default registerAs<AwsConfig>('aws', () => {
+  // eslint-disable-next-line no-console
+  console.info(`Registering AWSConfig from environment variables`);
+  validateConfig(process.env, EnvironmentVariablesValidator);
+  return getConfig();
+});
