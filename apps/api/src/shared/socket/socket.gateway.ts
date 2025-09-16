@@ -72,7 +72,7 @@ export class SocketGateway
 
   async handleConnection(socket: SocketWithUserSession) {
     // console.log('New client connected: ', socket?.id);
-    const userId = socket?.session?.user?.id as number;
+    const userId = socket?.session?.user?.id as string;
     if (!userId) {
       return;
     }
@@ -94,7 +94,7 @@ export class SocketGateway
     // console.log('Client disconnected: ', socket?.id);
 
     this.clients.delete(socket?.id);
-    const userId = socket?.session?.user?.id as number;
+    const userId = socket?.session?.user?.id as string;
     if (!userId) {
       return;
     }

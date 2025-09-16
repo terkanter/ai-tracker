@@ -7,10 +7,8 @@ export enum PolicyEffect {
 }
 
 @Entity('policies')
-@Index(['effect'], { where: '"deletedAt" IS NULL' })
-@Index(['action'], { where: '"deletedAt" IS NULL' })
 @Index(['effect', 'action'], { where: '"deletedAt" IS NULL' })
-export class PolicyModel extends BaseModel {
+export class PolicyEntity extends BaseModel {
   @Index({ where: '"deletedAt" IS NULL' })
   @Column({
     type: 'enum',

@@ -10,6 +10,7 @@ export type I18nTranslations = {
         "memberExists": string;
         "memberNotFound": string;
         "insufficientPermissions": string;
+        "defaultName": string;
     };
     "project": {
         "notFound": string;

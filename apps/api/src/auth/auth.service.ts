@@ -46,7 +46,7 @@ export class AuthService {
     // Rate limited to 1 email per 30 seconds
     const cacheKey: CacheParam = {
       key: 'SignInMagicLinkMailLastSentAt',
-      args: [user.id.toString()],
+      args: [user.id],
     };
     const remainingTtl = await this.cacheService.getTtl(cacheKey);
     if (!(remainingTtl == null) && remainingTtl !== 0) {
@@ -68,7 +68,7 @@ export class AuthService {
     // Rate limited to 1 email per 30 seconds
     const cacheKey: CacheParam = {
       key: 'EmailVerificationMailLastSentAt',
-      args: [userId.toString()],
+      args: [userId],
     };
     const remainingTtl = await this.cacheService.getTtl(cacheKey);
     if (!(remainingTtl == null) && remainingTtl !== 0) {

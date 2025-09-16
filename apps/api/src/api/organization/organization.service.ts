@@ -1,11 +1,11 @@
 import { OffsetPaginatedDto } from '@/common/dto/offset-pagination/paginated.dto';
 import { Uuid } from '@/common/types/common.type';
-import { OrganizationMemberModel } from '@/database/models/organization-member.model';
-import { OrganizationModel } from '@/database/models/organization.model';
-import { ResourceType } from '@/database/models/resource-attributes.model';
+import { OrganizationMemberEntity } from '@/database/entities/organization-member.entity';
+import { OrganizationEntity } from '@/database/entities/organization.entity';
+import { ResourceType } from '@/database/entities/resource-attributes.entity';
 import { I18nTranslations } from '@/generated/i18n.generated';
 import { AbacService } from '@/shared/abac/abac.service';
-import { OrganizationAction, ProjectAction } from '@/shared/abac/abac.types';
+import { OrganizationAction } from '@/shared/abac/abac.types';
 import { paginate } from '@/utils/pagination/offset-pagination';
 import {
   ConflictException,
@@ -32,10 +32,10 @@ export class OrganizationService {
   constructor(
     private readonly i18nService: I18nService<I18nTranslations>,
     private readonly abacService: AbacService,
-    @InjectRepository(OrganizationModel)
-    private readonly organizationRepository: Repository<OrganizationModel>,
-    @InjectRepository(OrganizationMemberModel)
-    private readonly organizationMemberRepository: Repository<OrganizationMemberModel>,
+    @InjectRepository(OrganizationEntity)
+    private readonly organizationRepository: Repository<OrganizationEntity>,
+    @InjectRepository(OrganizationMemberEntity)
+    private readonly organizationMemberRepository: Repository<OrganizationMemberEntity>,
   ) {}
 
   async findAllOrganizations(
@@ -65,12 +65,10 @@ export class OrganizationService {
     return organization.toDto(OrganizationDto);
   }
 
-
   async createOrganization(
     dto: CreateOrganizationDto,
     creatorUserId: string,
   ): Promise<OrganizationDto> {
-
     const organization = this.organizationRepository.create(dto);
     const savedOrganization =
       await this.organizationRepository.save(organization);
@@ -113,7 +111,6 @@ export class OrganizationService {
     if (!organization) {
       throw new NotFoundException(this.i18nService.t('organization.notFound'));
     }
-
 
     Object.assign(organization, dto);
     const updatedOrganization =

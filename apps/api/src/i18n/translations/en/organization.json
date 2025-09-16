@@ -2,5 +2,6 @@
   "notFound": "Organization not found",
   "memberExists": "User is already a member of this organization",
   "memberNotFound": "Member not found",
-  "insufficientPermissions": "Insufficient permissions"
+  "insufficientPermissions": "Insufficient permissions",
+  "defaultName": "{name}'s Organization"
 }

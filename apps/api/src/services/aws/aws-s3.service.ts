@@ -29,7 +29,9 @@ export class AwsS3Service {
     };
 
     const endpoint = this.configService.get('aws.endpoint', { infer: true });
-    const forcePathStyle = this.configService.get('aws.forcePathStyle', { infer: true });
+    const forcePathStyle = this.configService.get('aws.forcePathStyle', {
+      infer: true,
+    });
 
     if (endpoint) {
       Object.assign(awsConfig, {

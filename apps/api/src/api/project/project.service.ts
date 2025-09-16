@@ -1,6 +1,6 @@
 import { OffsetPaginatedDto } from '@/common/dto/offset-pagination/paginated.dto';
-import { ProjectModel } from '@/database/models/project.model';
-import { ResourceType } from '@/database/models/resource-attributes.model';
+import { ProjectEntity } from '@/database/entities/project.entity';
+import { ResourceType } from '@/database/entities/resource-attributes.entity';
 import { I18nTranslations } from '@/generated/i18n.generated';
 import { AbacService } from '@/shared/abac/abac.service';
 import { OrganizationAction, ProjectAction } from '@/shared/abac/abac.types';
@@ -22,15 +22,15 @@ export class ProjectService {
   constructor(
     private readonly i18nService: I18nService<I18nTranslations>,
     private readonly abacService: AbacService,
-    @InjectRepository(ProjectModel)
-    private readonly projectRepository: Repository<ProjectModel>,
+    @InjectRepository(ProjectEntity)
+    private readonly projectRepository: Repository<ProjectEntity>,
   ) {}
 
   async findAllProjects(
     dto: QueryProjectsOffsetDto,
-    userId?: string,
+    userId: string,
   ): Promise<OffsetPaginatedDto<ProjectDto>> {
-    if (dto.organizationId && userId) {
+    if (dto.organizationId) {
       const hasAccess = await this.abacService.checkPermission({
         userId,
         resourceType: ResourceType.ORGANIZATION,
@@ -67,7 +67,7 @@ export class ProjectService {
     );
   }
 
-  async findOneProject(id: string, userId?: string): Promise<ProjectDto> {
+  async findOneProject(id: string): Promise<ProjectDto> {
     const project = await this.projectRepository.findOne({
       where: { id },
       relations: ['organization'],
@@ -77,31 +77,13 @@ export class ProjectService {
       throw new NotFoundException(this.i18nService.t('project.notFound'));
     }
 
-    // Check access if userId is provided (for additional security)
-    if (userId) {
-      const hasAccess = await this.abacService.checkPermission({
-        userId,
-        resourceType: ResourceType.PROJECT,
-        resourceId: id,
-        action: ProjectAction.READ,
-      });
-
-      if (!hasAccess) {
-        throw new ForbiddenException(
-          this.i18nService.t('project.insufficientPermissions'),
-        );
-      }
-    }
-
     return project.toDto(ProjectDto);
   }
-
 
   async createProject(
     dto: CreateProjectDto,
     userId: string,
   ): Promise<ProjectDto> {
-    // Check if user has permission to create projects in this organization
     const hasOrgAccess = await this.abacService.checkPermission({
       userId,
       resourceType: ResourceType.ORGANIZATION,
@@ -134,29 +116,13 @@ export class ProjectService {
     return savedProject.toDto(ProjectDto);
   }
 
-  async updateProject(id: string, dto: UpdateProjectDto, userId?: string): Promise<ProjectDto> {
+  async updateProject(id: string, dto: UpdateProjectDto): Promise<ProjectDto> {
     const project = await this.projectRepository.findOne({
       where: { id },
     });
 
     if (!project) {
       throw new NotFoundException(this.i18nService.t('project.notFound'));
-    }
-
-    // Additional access check if userId is provided
-    if (userId) {
-      const hasAccess = await this.abacService.checkPermission({
-        userId,
-        resourceType: ResourceType.PROJECT,
-        resourceId: id,
-        action: ProjectAction.WRITE,
-      });
-
-      if (!hasAccess) {
-        throw new ForbiddenException(
-          this.i18nService.t('project.insufficientPermissions'),
-        );
-      }
     }
 
     Object.assign(project, dto);
@@ -165,7 +131,7 @@ export class ProjectService {
     return updatedProject.toDto(ProjectDto);
   }
 
-  async deleteProject(id: string, userId?: string): Promise<void> {
+  async deleteProject(id: string): Promise<void> {
     const project = await this.projectRepository.findOne({
       where: { id },
     });
@@ -174,23 +140,6 @@ export class ProjectService {
       throw new NotFoundException(this.i18nService.t('project.notFound'));
     }
 
-    // Additional access check if userId is provided
-    if (userId) {
-      const hasAccess = await this.abacService.checkPermission({
-        userId,
-        resourceType: ResourceType.PROJECT,
-        resourceId: id,
-        action: ProjectAction.DELETE,
-      });
-
-      if (!hasAccess) {
-        throw new ForbiddenException(
-          this.i18nService.t('project.insufficientPermissions'),
-        );
-      }
-    }
-
     await this.projectRepository.softDelete(id);
   }
-
 }

@@ -1,6 +1,6 @@
-import { PolicyModel } from '@/database/models/policy.model';
-import { ResourceAttributesModel } from '@/database/models/resource-attributes.model';
-import { UserAttributesModel } from '@/database/models/user-attributes.model';
+import { PolicyEntity } from '@/database/entities/policy.entity';
+import { ResourceAttributesEntity } from '@/database/entities/resource-attributes.entity';
+import { UserAttributesEntity } from '@/database/entities/user-attributes.entity';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AbacService } from './abac.service';
@@ -8,9 +8,9 @@ import { AbacService } from './abac.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      PolicyModel,
-      UserAttributesModel,
-      ResourceAttributesModel,
+      PolicyEntity,
+      UserAttributesEntity,
+      ResourceAttributesEntity,
     ]),
   ],
   providers: [AbacService],

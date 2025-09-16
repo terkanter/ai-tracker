@@ -1,5 +1,5 @@
 import { PageOptionsDto as OffsetPageOptions } from '@/common/dto/offset-pagination/page-options.dto';
-import { ProjectStatus } from '@/database/models/project.model';
+import { ProjectStatus } from '@/database/entities/project.entity';
 import {
   ClassField,
   StringField,

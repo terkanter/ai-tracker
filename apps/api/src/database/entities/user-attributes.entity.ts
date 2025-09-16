@@ -4,8 +4,7 @@ import { BaseModel } from './base.model';
 
 @Entity('user_attributes')
 @Unique(['userId'])
-@Index(['userId'], { where: '"deletedAt" IS NULL' })
-export class UserAttributesModel extends BaseModel {
+export class UserAttributesEntity extends BaseModel {
   @Index({ where: '"deletedAt" IS NULL' })
   @Column()
   userId: string;
