@@ -2,8 +2,7 @@ import { Column, Entity, Index, OneToMany, Unique } from 'typeorm';
 import { BaseModel } from './base.model';
 
 @Entity('organizations')
-@Index(['name'], { where: '"deletedAt" IS NULL' })
-export class OrganizationModel extends BaseModel {
+export class OrganizationEntity extends BaseModel {
   @Index({ where: '"deletedAt" IS NULL' })
   @Column({ type: 'varchar', length: 255 })
   name: string;
@@ -11,9 +10,9 @@ export class OrganizationModel extends BaseModel {
   @Column({ type: 'text', nullable: true })
   description?: string;
 
-  @OneToMany('OrganizationMemberModel', 'organization')
+  @OneToMany('OrganizationMemberEntity', 'organization')
   members: any[];
 
-  @OneToMany('ProjectModel', 'organization')
+  @OneToMany('ProjectEntity', 'organization')
   projects: any[];
 }

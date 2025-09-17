@@ -1,4 +1,4 @@
-import { ProjectStatus } from '@/database/models/project.model';
+import { ProjectStatus } from '@/database/entities/project.entity';
 import {
   StringField,
   StringFieldOptional,

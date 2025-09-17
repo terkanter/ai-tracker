@@ -82,7 +82,8 @@ export function getConfig(): DatabaseConfig {
     database: process.env.DATABASE_NAME,
     username: process.env.DATABASE_USERNAME,
     logging: process.env.DATABASE_LOGGING === 'true',
-    dropSchema: false,
+    dropSchema: false, // for development
+    synchronize: true, // for development
     poolSize: process.env.DATABASE_MAX_CONNECTIONS
       ? parseInt(process.env.DATABASE_MAX_CONNECTIONS, 10)
       : 100,

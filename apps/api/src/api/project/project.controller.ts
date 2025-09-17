@@ -1,7 +1,7 @@
 import { AuthGuard } from '@/auth/auth.guard';
 import { OffsetPaginatedDto } from '@/common/dto/offset-pagination/paginated.dto';
 import { Uuid } from '@/common/types/common.type';
-import { ResourceType } from '@/database/models/resource-attributes.model';
+import { ResourceType } from '@/database/entities/resource-attributes.entity';
 import { CurrentUserSession } from '@/decorators/auth/current-user-session.decorator';
 import { ApiAuth } from '@/decorators/http.decorators';
 import { AbacGuard, RequireAbac } from '@/shared/abac/abac.guard';
@@ -56,13 +56,9 @@ export class ProjectController {
   })
   @ApiAuth({ summary: 'Find project by id', type: ProjectDto })
   @ApiParam({ name: 'id', type: 'string' })
-  async findProject(
-    @Param('id', ParseUUIDPipe) id: Uuid,
-    @CurrentUserSession('user') user: CurrentUserSession['user'],
-  ): Promise<ProjectDto> {
-    return await this.projectService.findOneProject(id, user.id);
+  async findProject(@Param('id', ParseUUIDPipe) id: Uuid): Promise<ProjectDto> {
+    return await this.projectService.findOneProject(id);
   }
-
 
   @Post()
   @ApiAuth({
@@ -90,9 +86,8 @@ export class ProjectController {
   async updateProject(
     @Param('id', ParseUUIDPipe) id: Uuid,
     @Body() dto: UpdateProjectDto,
-    @CurrentUserSession('user') user: CurrentUserSession['user'],
   ): Promise<ProjectDto> {
-    return await this.projectService.updateProject(id, dto, user.id);
+    return await this.projectService.updateProject(id, dto);
   }
 
   @Delete(':id')
@@ -107,11 +102,7 @@ export class ProjectController {
     errorResponses: [400, 401, 403, 404, 500],
   })
   @ApiParam({ name: 'id', type: 'string' })
-  async deleteProject(
-    @Param('id', ParseUUIDPipe) id: Uuid,
-    @CurrentUserSession('user') user: CurrentUserSession['user'],
-  ): Promise<void> {
-    return await this.projectService.deleteProject(id, user.id);
+  async deleteProject(@Param('id', ParseUUIDPipe) id: Uuid): Promise<void> {
+    return await this.projectService.deleteProject(id);
   }
-
 }

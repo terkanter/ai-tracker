@@ -15,6 +15,7 @@ import {
 } from '@nestjs/core';
 import { betterAuth, type Auth } from 'better-auth';
 
+import { OrganizationService } from '@/api/organization/organization.service';
 import { getConfig as getBetterAuthConfig } from '@/config/auth/better-auth.config';
 import { GlobalConfig } from '@/config/config.type';
 import {
@@ -24,6 +25,10 @@ import {
   HOOK_KEY,
 } from '@/constants/auth.constant';
 import { Queue } from '@/constants/job.constant';
+import { OrganizationMemberEntity } from '@/database/entities/organization-member.entity';
+import { OrganizationEntity } from '@/database/entities/organization.entity';
+import { I18nTranslations } from '@/generated/i18n.generated';
+import { AbacModule } from '@/shared/abac/abac.module';
 import { CacheModule } from '@/shared/cache/cache.module';
 import { CacheService } from '@/shared/cache/cache.service';
 import { ConfigService } from '@nestjs/config';
@@ -34,6 +39,7 @@ import type {
   FastifyReply as Reply,
   FastifyRequest as Request,
 } from 'fastify';
+import { I18nService } from 'nestjs-i18n';
 import { AuthService } from './auth.service';
 import { BetterAuthService } from './better-auth.service';
 import { UserEntity } from './entities/user.entity';
@@ -54,7 +60,12 @@ const HOOKS = [
       name: Queue.Email,
       adapter: BullMQAdapter,
     }),
-    TypeOrmModule.forFeature([UserEntity]),
+    TypeOrmModule.forFeature([
+      UserEntity,
+      OrganizationEntity,
+      OrganizationMemberEntity,
+    ]),
+    AbacModule,
   ],
   providers: [AuthService],
   exports: [AuthService],
@@ -171,23 +182,41 @@ export class AuthModule implements NestModule, OnModuleInit {
     return {
       global: true,
       module: AuthModule,
-      imports: [CacheModule],
+      imports: [
+        CacheModule,
+        AbacModule,
+        TypeOrmModule.forFeature([
+          OrganizationEntity,
+          OrganizationMemberEntity,
+        ]),
+      ],
       providers: [
+        OrganizationService,
         {
           provide: AUTH_INSTANCE_KEY,
           useFactory: async (
             cacheService: CacheService,
             configService: ConfigService<GlobalConfig>,
             authService: AuthService,
+            organizationService: OrganizationService,
+            i18nService: I18nService<I18nTranslations>,
           ) => {
             const config = getBetterAuthConfig({
               cacheService,
               configService,
               authService,
+              organizationService,
+              i18nService,
             });
             return betterAuth(config);
           },
-          inject: [CacheService, ConfigService, AuthService],
+          inject: [
+            CacheService,
+            ConfigService,
+            AuthService,
+            OrganizationService,
+            I18nService,
+          ],
         },
         BetterAuthService,
       ],

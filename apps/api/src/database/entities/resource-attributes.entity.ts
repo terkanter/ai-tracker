@@ -8,10 +8,8 @@ export enum ResourceType {
 
 @Entity('resource_attributes')
 @Unique(['resourceType', 'resourceId'])
-@Index(['resourceType'], { where: '"deletedAt" IS NULL' })
-@Index(['resourceId'], { where: '"deletedAt" IS NULL' })
 @Index(['resourceType', 'resourceId'], { where: '"deletedAt" IS NULL' })
-export class ResourceAttributesModel extends BaseModel {
+export class ResourceAttributesEntity extends BaseModel {
   @Index({ where: '"deletedAt" IS NULL' })
   @Column({ type: 'integer' })
   resourceType: ResourceType;

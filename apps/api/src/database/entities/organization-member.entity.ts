@@ -1,13 +1,11 @@
 import { UserEntity } from '@/auth/entities/user.entity';
 import { Column, Entity, Index, JoinColumn, ManyToOne, Unique } from 'typeorm';
 import { BaseModel } from './base.model';
-import { OrganizationModel } from './organization.model';
+import { OrganizationEntity } from './organization.entity';
 
 @Entity('organization_members')
 @Unique(['userId', 'organizationId'])
-@Index(['userId'], { where: '"deletedAt" IS NULL' })
-@Index(['organizationId'], { where: '"deletedAt" IS NULL' })
-export class OrganizationMemberModel extends BaseModel {
+export class OrganizationMemberEntity extends BaseModel {
   @Index({ where: '"deletedAt" IS NULL' })
   @Column()
   userId: string;
@@ -22,11 +20,11 @@ export class OrganizationMemberModel extends BaseModel {
   @Column()
   organizationId: string;
 
-  @ManyToOne(() => OrganizationModel, (organization) => organization.members, {
+  @ManyToOne(() => OrganizationEntity, (organization) => organization.members, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'organizationId' })
-  organization: OrganizationModel;
+  organization: OrganizationEntity;
 
   @Column({ type: 'timestamp', nullable: true })
   joinedAt?: Date;

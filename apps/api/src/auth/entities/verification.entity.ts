@@ -1,4 +1,4 @@
-import { BaseModel } from '@/database/models/base.model';
+import { BaseModel } from '@/database/entities/base.model';
 import { Column, Entity } from 'typeorm';
 
 // https://www.better-auth.com/docs/concepts/database#core-schema

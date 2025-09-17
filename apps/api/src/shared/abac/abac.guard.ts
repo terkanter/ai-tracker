@@ -1,6 +1,13 @@
-import { ResourceType } from '@/database/models/resource-attributes.model';
+import { ResourceType } from '@/database/entities/resource-attributes.entity';
 import { CurrentUserSession } from '@/decorators/auth/current-user-session.decorator';
-import { CanActivate, ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+  Injectable,
+  Logger,
+  SetMetadata,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { I18nService } from 'nestjs-i18n';
 import { AbacService } from './abac.service';
@@ -9,16 +16,18 @@ import { OrganizationAction, ProjectAction } from './abac.types';
 export interface AbacRequirement {
   resourceType: ResourceType;
   action: OrganizationAction | ProjectAction;
-  resourceIdParam?: string; 
+  resourceIdParam?: string;
 }
 
 export const ABAC_REQUIREMENT_KEY = 'abac_requirement';
 
 export const RequireAbac = (requirement: AbacRequirement) =>
-  Reflect.metadata(ABAC_REQUIREMENT_KEY, requirement);
+  SetMetadata(ABAC_REQUIREMENT_KEY, requirement);
 
 @Injectable()
 export class AbacGuard implements CanActivate {
+  private readonly logger = new Logger(AbacGuard.name);
+
   constructor(
     private readonly reflector: Reflector,
     private readonly abacService: AbacService,
@@ -31,8 +40,10 @@ export class AbacGuard implements CanActivate {
       context.getHandler(),
     );
 
+    this.logger.log(`Requirement: ${JSON.stringify(requirement)}`);
+
     if (!requirement) {
-      return true; 
+      return true;
     }
 
     const request = context.switchToHttp().getRequest();
@@ -40,7 +51,7 @@ export class AbacGuard implements CanActivate {
 
     if (!user) {
       throw new ForbiddenException(
-        this.i18nService.t('organization.insufficientPermissions')
+        this.i18nService.t('organization.insufficientPermissions'),
       );
     }
 
@@ -50,7 +61,7 @@ export class AbacGuard implements CanActivate {
 
     if (!resourceId) {
       throw new ForbiddenException(
-        this.i18nService.t('organization.insufficientPermissions')
+        this.i18nService.t('organization.insufficientPermissions'),
       );
     }
 
@@ -63,7 +74,7 @@ export class AbacGuard implements CanActivate {
 
     if (!hasPermission) {
       throw new ForbiddenException(
-        this.i18nService.t('organization.insufficientPermissions')
+        this.i18nService.t('organization.insufficientPermissions'),
       );
     }
 

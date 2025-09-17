@@ -1,11 +1,11 @@
-import { PolicyEffect, PolicyModel } from '@/database/models/policy.model';
+import { PolicyEffect, PolicyEntity } from '@/database/entities/policy.entity';
 import {
-  ResourceAttributesModel,
+  ResourceAttributesEntity,
   ResourceType,
-} from '@/database/models/resource-attributes.model';
-import { UserAttributesModel } from '@/database/models/user-attributes.model';
+} from '@/database/entities/resource-attributes.entity';
+import { UserAttributesEntity } from '@/database/entities/user-attributes.entity';
 import { I18nTranslations } from '@/generated/i18n.generated';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { I18nService } from 'nestjs-i18n';
 import { Repository } from 'typeorm';
@@ -25,26 +25,34 @@ export interface PermissionRule {
 
 @Injectable()
 export class AbacService {
+  private readonly logger = new Logger(AbacService.name);
+
   constructor(
     private readonly i18nService: I18nService<I18nTranslations>,
-    @InjectRepository(PolicyModel)
-    private readonly policyRepository: Repository<PolicyModel>,
-    @InjectRepository(UserAttributesModel)
-    private readonly userAttributesRepository: Repository<UserAttributesModel>,
-    @InjectRepository(ResourceAttributesModel)
-    private readonly resourceAttributesRepository: Repository<ResourceAttributesModel>,
+    @InjectRepository(PolicyEntity)
+    private readonly policyRepository: Repository<PolicyEntity>,
+    @InjectRepository(UserAttributesEntity)
+    private readonly userAttributesRepository: Repository<UserAttributesEntity>,
+    @InjectRepository(ResourceAttributesEntity)
+    private readonly resourceAttributesRepository: Repository<ResourceAttributesEntity>,
   ) {}
 
   async checkPermission(context: AbacContext): Promise<boolean> {
     const userAttributes = await this.getUserAttributes(context.userId);
+    this.logger.log(`User attributes: ${JSON.stringify(userAttributes)}`);
 
     const resourceAttributes = await this.getResourceAttributes(
       context.resourceType,
       context.resourceId,
     );
 
+    this.logger.log(
+      `Resource attributes: ${JSON.stringify(resourceAttributes)}`,
+    );
+
     const policies = await this.getApplicablePolicies(context.action);
 
+    this.logger.log(`Policies: ${JSON.stringify(policies)}`);
     let hasPermission = false;
     let isDenied = false;
 
@@ -149,7 +157,7 @@ export class AbacService {
     };
   }
 
-  private async getApplicablePolicies(action: string): Promise<PolicyModel[]> {
+  private async getApplicablePolicies(action: string): Promise<PolicyEntity[]> {
     return this.policyRepository.find({
       where: [
         { action, isActive: true },

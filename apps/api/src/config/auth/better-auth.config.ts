@@ -1,12 +1,17 @@
+import { CreateOrganizationDto } from '@/api/organization/dto/create-organization.dto';
+import { OrganizationService } from '@/api/organization/organization.service';
 import { AuthService } from '@/auth/auth.service';
 import { GlobalConfig } from '@/config/config.type';
+import { I18nTranslations } from '@/generated/i18n.generated';
 import { CacheService } from '@/shared/cache/cache.service';
 import { validateUsername } from '@/utils/validators/username';
+import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { APIError } from 'better-auth/api';
+import { APIError, createAuthMiddleware } from 'better-auth/api';
 import { magicLink, openAPI, twoFactor, username } from 'better-auth/plugins';
 import { passkey } from 'better-auth/plugins/passkey';
 import { BetterAuthOptions, BetterAuthPlugin } from 'better-auth/types';
+import { I18nService } from 'nestjs-i18n';
 import { Pool } from 'pg';
 import { v4 as uuid } from 'uuid';
 
@@ -19,11 +24,16 @@ export function getConfig({
   configService,
   cacheService,
   authService,
+  organizationService,
+  i18nService,
 }: {
   configService: ConfigService<GlobalConfig>;
   cacheService: CacheService;
   authService: AuthService;
+  organizationService: OrganizationService;
+  i18nService: I18nService<I18nTranslations>;
 }): BetterAuthOptions {
+  const logger = new Logger('BetterAuthConfig');
   const appConfig = configService.getOrThrow('app', { infer: true });
   const databaseConfig = configService.getOrThrow('database', { infer: true });
   const authConfig = configService.getOrThrow('auth', { infer: true });
@@ -151,7 +161,6 @@ export function getConfig({
       },
       cookiePrefix: 'TmVzdEpTIEJvaWxlcnBsYXRl',
     },
-    // Use Redis for storing sessions
     secondaryStorage: {
       get: async (key) => {
         return (
@@ -172,6 +181,34 @@ export function getConfig({
       delete: async (key) => {
         await cacheService.delete({ key: 'AccessToken', args: [key] });
       },
+    },
+    hooks: {
+      after: createAuthMiddleware(async (ctx) => {
+        if (ctx.path === '/sign-up/email') {
+          const newSession = ctx.context.newSession;
+          if (newSession) {
+            try {
+              const createOrgDto = new CreateOrganizationDto();
+              createOrgDto.name = i18nService.t('organization.defaultName', {
+                args: {
+                  name: newSession.user.name,
+                },
+              });
+
+              await organizationService.createOrganization(
+                createOrgDto,
+                newSession.user.id,
+              );
+            } catch (error) {
+              logger.error(
+                'Failed to create organization after signup:',
+                error,
+              );
+              // Don't throw error to avoid breaking signup flow
+            }
+          }
+        }
+      }),
     },
   };
 }

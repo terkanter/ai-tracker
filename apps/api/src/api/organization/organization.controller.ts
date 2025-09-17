@@ -1,7 +1,7 @@
 import { AuthGuard } from '@/auth/auth.guard';
 import { OffsetPaginatedDto } from '@/common/dto/offset-pagination/paginated.dto';
 import { Uuid } from '@/common/types/common.type';
-import { ResourceType } from '@/database/models/resource-attributes.model';
+import { ResourceType } from '@/database/entities/resource-attributes.entity';
 import { CurrentUserSession } from '@/decorators/auth/current-user-session.decorator';
 import { ApiAuth } from '@/decorators/http.decorators';
 import { AbacGuard, RequireAbac } from '@/shared/abac/abac.guard';
@@ -44,6 +44,10 @@ export class OrganizationController {
   constructor(private readonly organizationService: OrganizationService) {}
 
   @Get()
+  @RequireAbac({
+    resourceType: ResourceType.ORGANIZATION,
+    action: OrganizationAction.READ,
+  })
   @ApiAuth({
     type: OrganizationDto,
     summary: 'List organizations.',
@@ -56,6 +60,11 @@ export class OrganizationController {
   }
 
   @Get(':id')
+  @RequireAbac({
+    resourceType: ResourceType.ORGANIZATION,
+    action: OrganizationAction.READ,
+    resourceIdParam: 'id',
+  })
   @ApiAuth({ summary: 'Find organization by id', type: OrganizationDto })
   @ApiParam({ name: 'id', type: 'string' })
   async findOrganization(
@@ -64,8 +73,11 @@ export class OrganizationController {
     return await this.organizationService.findOneOrganization(id);
   }
 
-
   @Post()
+  @RequireAbac({
+    resourceType: ResourceType.ORGANIZATION,
+    action: OrganizationAction.WRITE,
+  })
   @ApiAuth({
     summary: 'Create a new organization',
     type: OrganizationDto,
@@ -116,6 +128,11 @@ export class OrganizationController {
   }
 
   @Get(':id/members')
+  @RequireAbac({
+    resourceType: ResourceType.ORGANIZATION,
+    action: OrganizationAction.READ,
+    resourceIdParam: 'id',
+  })
   @ApiAuth({
     summary: 'Get organization members',
     type: OrganizationMemberDto,
@@ -130,6 +147,11 @@ export class OrganizationController {
   }
 
   @Post(':id/members')
+  @RequireAbac({
+    resourceType: ResourceType.ORGANIZATION,
+    action: OrganizationAction.INVITE,
+    resourceIdParam: 'id',
+  })
   @ApiAuth({
     summary: 'Add member to organization',
     type: OrganizationMemberDto,
@@ -144,6 +166,11 @@ export class OrganizationController {
   }
 
   @Patch(':id/members/:memberId')
+  @RequireAbac({
+    resourceType: ResourceType.ORGANIZATION,
+    action: OrganizationAction.MANAGE,
+    resourceIdParam: 'id',
+  })
   @ApiAuth({
     summary: 'Update member role',
     type: OrganizationMemberDto,
@@ -165,6 +192,11 @@ export class OrganizationController {
   }
 
   @Delete(':id/members/:memberId')
+  @RequireAbac({
+    resourceType: ResourceType.ORGANIZATION,
+    action: OrganizationAction.REMOVE_MEMBERS,
+    resourceIdParam: 'id',
+  })
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiAuth({
     summary: 'Remove member from organization',

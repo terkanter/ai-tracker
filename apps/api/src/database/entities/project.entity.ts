@@ -1,6 +1,6 @@
 import { Column, Entity, Index, JoinColumn, ManyToOne, Unique } from 'typeorm';
 import { BaseModel } from './base.model';
-import { OrganizationModel } from './organization.model';
+import { OrganizationEntity } from './organization.entity';
 
 export enum ProjectStatus {
   ACTIVE = 'active',
@@ -9,10 +9,7 @@ export enum ProjectStatus {
 }
 
 @Entity('projects')
-@Index(['name'], { where: '"deletedAt" IS NULL' })
-@Index(['organizationId'], { where: '"deletedAt" IS NULL' })
-@Index(['status'], { where: '"deletedAt" IS NULL' })
-export class ProjectModel extends BaseModel {
+export class ProjectEntity extends BaseModel {
   @Index({ where: '"deletedAt" IS NULL' })
   @Column({ type: 'varchar', length: 255 })
   name: string;
@@ -21,15 +18,20 @@ export class ProjectModel extends BaseModel {
   @Column()
   organizationId: string;
 
-  @ManyToOne(() => OrganizationModel, (organization) => organization.projects, {
-    onDelete: 'CASCADE',
-  })
+  @ManyToOne(
+    () => OrganizationEntity,
+    (organization) => organization.projects,
+    {
+      onDelete: 'CASCADE',
+    },
+  )
   @JoinColumn({ name: 'organizationId' })
-  organization: OrganizationModel;
+  organization: OrganizationEntity;
 
   @Column({ type: 'text', nullable: true })
   description?: string;
 
+  @Index(['status'], { where: '"deletedAt" IS NULL' })
   @Column({
     type: 'enum',
     enum: ProjectStatus,

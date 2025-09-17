@@ -1,4 +1,4 @@
-import { ProjectStatus } from '@/database/models/project.model';
+import { ProjectStatus } from '@/database/entities/project.entity';
 import { StringFieldOptional } from '@/decorators/field.decorators';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsOptional } from 'class-validator';
