@@ -1,0 +1,65 @@
+{
+  "name": "@workspace/admin",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "lint": "biome check src/",
+    "lint:fix": "biome check src/ --write",
+    "lint:unsafe": "biome check src/ --write --unsafe",
+    "format": "biome format src/ --write",
+    "check": "biome check src/ --write",
+    "check:unsafe": "biome check src/ --write --unsafe",
+    "type-check": "tsc --noEmit"
+  },
+  "exports": {
+    "./hooks/*": "./src/hooks/*.tsx",
+    "./lib/*": "./src/lib/*.ts",
+    "./*": "./src/components/*.tsx"
+  },
+  "dependencies": {
+    "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-popover": "^1.1.15",
+    "@t3-oss/env-core": "^0.13.8",
+    "@tanstack/react-query": "catalog:",
+    "@workspace/ui": "workspace:*",
+    "class-variance-authority": "catalog:",
+    "cmdk": "^1.1.1",
+    "diacritic": "^0.0.2",
+    "inflection": "^3.0.2",
+    "js-cookie": "^3.0.5",
+    "lodash": "catalog:",
+    "lucide-react": "catalog:",
+    "next-themes": "catalog:",
+    "query-string": "^9.3.0",
+    "ra-core": "^5.11.2",
+    "ra-i18n-polyglot": "^5.11.2",
+    "ra-language-english": "^5.11.2",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-dropzone": "catalog:",
+    "react-error-boundary": "catalog:",
+    "react-hook-form": "catalog:",
+    "react-router": "catalog:",
+    "sonner": "^2.0.7",
+    "vaul": "^1.1.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.1.11",
+    "@types/lodash": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@workspace/typescript-config": "workspace:*",
+    "autoprefixer": "catalog:",
+    "postcss": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "tailwindcss": "catalog:"
+  },
+  "packageManager": "pnpm@9.12.3"
+}

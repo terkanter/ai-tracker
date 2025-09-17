@@ -270,7 +270,7 @@ export const userControllerUpdateUserProfileMutation = (
     UserControllerUpdateUserProfileError,
     Options<UserControllerUpdateUserProfileData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await userControllerUpdateUserProfile({
         ...options,
         ...localOptions,
@@ -406,7 +406,7 @@ export const userControllerDeleteUserMutation = (
     UserControllerDeleteUserError,
     Options<UserControllerDeleteUserData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await userControllerDeleteUser({
         ...options,
         ...localOptions,
@@ -556,7 +556,7 @@ export const comicControllerCreateComicMutation = (
     ComicControllerCreateComicError,
     Options<ComicControllerCreateComicData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await comicControllerCreateComic({
         ...options,
         ...localOptions,
@@ -607,7 +607,7 @@ export const comicControllerDeleteComicMutation = (
     ComicControllerDeleteComicError,
     Options<ComicControllerDeleteComicData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await comicControllerDeleteComic({
         ...options,
         ...localOptions,
@@ -634,7 +634,7 @@ export const comicControllerUpdateComicMutation = (
     ComicControllerUpdateComicError,
     Options<ComicControllerUpdateComicData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await comicControllerUpdateComic({
         ...options,
         ...localOptions,
@@ -709,7 +709,7 @@ export const comicControllerCreateGenreMutation = (
     ComicControllerCreateGenreError,
     Options<ComicControllerCreateGenreData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await comicControllerCreateGenre({
         ...options,
         ...localOptions,
@@ -736,7 +736,7 @@ export const comicControllerDeleteGenreMutation = (
     ComicControllerDeleteGenreError,
     Options<ComicControllerDeleteGenreData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await comicControllerDeleteGenre({
         ...options,
         ...localOptions,
@@ -763,7 +763,7 @@ export const comicControllerUpdateGenreMutation = (
     ComicControllerUpdateGenreError,
     Options<ComicControllerUpdateGenreData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await comicControllerUpdateGenre({
         ...options,
         ...localOptions,
@@ -838,7 +838,7 @@ export const comicControllerCreateTagMutation = (
     ComicControllerCreateTagError,
     Options<ComicControllerCreateTagData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await comicControllerCreateTag({
         ...options,
         ...localOptions,
@@ -865,7 +865,7 @@ export const comicControllerDeleteTagMutation = (
     ComicControllerDeleteTagError,
     Options<ComicControllerDeleteTagData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await comicControllerDeleteTag({
         ...options,
         ...localOptions,
@@ -892,7 +892,7 @@ export const comicControllerUpdateTagMutation = (
     ComicControllerUpdateTagError,
     Options<ComicControllerUpdateTagData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await comicControllerUpdateTag({
         ...options,
         ...localOptions,
@@ -967,7 +967,7 @@ export const comicControllerCreateRatingMutation = (
     ComicControllerCreateRatingError,
     Options<ComicControllerCreateRatingData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await comicControllerCreateRating({
         ...options,
         ...localOptions,
@@ -994,7 +994,7 @@ export const comicControllerDeleteRatingMutation = (
     ComicControllerDeleteRatingError,
     Options<ComicControllerDeleteRatingData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await comicControllerDeleteRating({
         ...options,
         ...localOptions,
@@ -1021,7 +1021,7 @@ export const comicControllerUpdateRatingMutation = (
     ComicControllerUpdateRatingError,
     Options<ComicControllerUpdateRatingData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await comicControllerUpdateRating({
         ...options,
         ...localOptions,
@@ -1096,7 +1096,7 @@ export const comicControllerCreateCountryMutation = (
     ComicControllerCreateCountryError,
     Options<ComicControllerCreateCountryData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await comicControllerCreateCountry({
         ...options,
         ...localOptions,
@@ -1123,7 +1123,7 @@ export const comicControllerDeleteCountryMutation = (
     ComicControllerDeleteCountryError,
     Options<ComicControllerDeleteCountryData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await comicControllerDeleteCountry({
         ...options,
         ...localOptions,
@@ -1150,7 +1150,7 @@ export const comicControllerUpdateCountryMutation = (
     ComicControllerUpdateCountryError,
     Options<ComicControllerUpdateCountryData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await comicControllerUpdateCountry({
         ...options,
         ...localOptions,
@@ -1225,7 +1225,7 @@ export const comicControllerCreateStatusMutation = (
     ComicControllerCreateStatusError,
     Options<ComicControllerCreateStatusData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await comicControllerCreateStatus({
         ...options,
         ...localOptions,
@@ -1252,7 +1252,7 @@ export const comicControllerDeleteStatusMutation = (
     ComicControllerDeleteStatusError,
     Options<ComicControllerDeleteStatusData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await comicControllerDeleteStatus({
         ...options,
         ...localOptions,
@@ -1279,7 +1279,7 @@ export const comicControllerUpdateStatusMutation = (
     ComicControllerUpdateStatusError,
     Options<ComicControllerUpdateStatusData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await comicControllerUpdateStatus({
         ...options,
         ...localOptions,
@@ -1405,7 +1405,7 @@ export const chapterControllerCreateChapterMutation = (
     ChapterControllerCreateChapterError,
     Options<ChapterControllerCreateChapterData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await chapterControllerCreateChapter({
         ...options,
         ...localOptions,
@@ -1456,7 +1456,7 @@ export const chapterControllerDeleteChapterMutation = (
     ChapterControllerDeleteChapterError,
     Options<ChapterControllerDeleteChapterData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await chapterControllerDeleteChapter({
         ...options,
         ...localOptions,
@@ -1483,7 +1483,7 @@ export const chapterControllerUpdateChapterMutation = (
     ChapterControllerUpdateChapterError,
     Options<ChapterControllerUpdateChapterData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await chapterControllerUpdateChapter({
         ...options,
         ...localOptions,
@@ -1558,7 +1558,7 @@ export const userTitleStateControllerCreateUserTitleStateMutation = (
     UserTitleStateControllerCreateUserTitleStateError,
     Options<UserTitleStateControllerCreateUserTitleStateData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await userTitleStateControllerCreateUserTitleState({
         ...options,
         ...localOptions,
@@ -1609,7 +1609,7 @@ export const userTitleStateControllerDeleteUserTitleStateMutation = (
     UserTitleStateControllerDeleteUserTitleStateError,
     Options<UserTitleStateControllerDeleteUserTitleStateData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await userTitleStateControllerDeleteUserTitleState({
         ...options,
         ...localOptions,
@@ -1660,7 +1660,7 @@ export const userTitleStateControllerUpdateUserTitleStateMutation = (
     UserTitleStateControllerUpdateUserTitleStateError,
     Options<UserTitleStateControllerUpdateUserTitleStateData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await userTitleStateControllerUpdateUserTitleState({
         ...options,
         ...localOptions,
@@ -1793,7 +1793,7 @@ export const userTitleStateControllerUpdateReadingProgressMutation = (
     UserTitleStateControllerUpdateReadingProgressError,
     Options<UserTitleStateControllerUpdateReadingProgressData>
   > = {
-    mutationFn: async (localOptions) => {
+    mutationFn: async localOptions => {
       const { data } = await userTitleStateControllerUpdateReadingProgress({
         ...options,
         ...localOptions,

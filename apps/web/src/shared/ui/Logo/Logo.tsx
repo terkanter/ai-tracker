@@ -1,5 +1,5 @@
 import { LogoIcon } from "@/shared/icons/logo";
-import { IconSvgProps } from "@/shared/types";
+import type { IconSvgProps } from "@/shared/types";
 
 interface Props extends IconSvgProps {}
 

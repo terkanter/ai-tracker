@@ -1,6 +1,6 @@
-import canUseDOM from "./canUseDOM";
+import canUseDom from "./canUseDOM";
 
-export const getServerSideURL = () => {
+export const getServerSideUrl = () => {
   let url = process.env.NEXT_PUBLIC_SERVER_URL;
 
   if (!url) {
@@ -10,8 +10,8 @@ export const getServerSideURL = () => {
   return url;
 };
 
-export const getClientSideURL = () => {
-  if (canUseDOM) {
+export const getClientSideUrl = () => {
+  if (canUseDom) {
     const protocol = window.location.protocol;
     const domain = window.location.hostname;
     const port = window.location.port;

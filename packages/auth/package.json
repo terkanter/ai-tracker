@@ -1,0 +1,46 @@
+{
+  "name": "@workspace/auth",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "lint": "biome check src/",
+    "lint:fix": "biome check src/ --write",
+    "lint:unsafe": "biome check src/ --write --unsafe",
+    "format": "biome format src/ --write",
+    "check": "biome check src/ --write",
+    "check:unsafe": "biome check src/ --write --unsafe",
+    "type-check": "tsc --noEmit"
+  },
+  "exports": {
+    "./*": "./src/core/*.ts",
+    "./hooks/*": "./src/hooks/*.tsx",
+    "./lib/*": "./src/lib/*.ts"
+  },
+  "dependencies": {
+    "@t3-oss/env-core": "^0.13.8",
+    "@workspace/ui": "workspace:*",
+    "better-auth": "catalog:",
+    "class-variance-authority": "catalog:",
+    "lucide-react": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-hook-form": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@workspace/typescript-config": "workspace:*",
+    "autoprefixer": "catalog:",
+    "postcss": "catalog:",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "tailwindcss": "catalog:"
+  },
+  "packageManager": "pnpm@9.12.3"
+}

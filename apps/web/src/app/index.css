@@ -1,0 +1,6 @@
+@import "@workspace/ui/globals.css";
+
+@source "../../node_modules/@workspace/ui";
+@source "../../node_modules/@workspace/admin";
+
+/* @source '../../../packages/ui/src'; */

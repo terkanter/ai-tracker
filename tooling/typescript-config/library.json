@@ -1,0 +1,12 @@
+{
+  "extends": "./base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "declaration": true,
+    "declarationMap": true,
+    "incremental": false
+  },
+  "include": ["src/**/*", "index.ts", "**/*.ts", "**/*.tsx"]
+}

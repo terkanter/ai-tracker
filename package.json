@@ -5,15 +5,18 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "dev:web": "pnpm --filter ./apps/web dev",
+    "lint": "biome check .",
+    "lint:fix": "biome check . --write",
+    "lint:unsafe": "biome check . --write --unsafe",
+    "format": "biome format . --write",
+    "check": "biome check . --write",
+    "check:unsafe": "biome check . --write --unsafe",
+    "type-check": "turbo type-check"
   },
   "devDependencies": {
-    "@workspace/eslint-config": "workspace:*",
-    "@workspace/typescript-config": "workspace:*",
-    "prettier": "^3.2.5",
-    "turbo": "^2.3.0",
-    "typescript": "5.5.4"
+    "@biomejs/biome": "^2.2.4",
+    "turbo": "^2.3.0"
   },
   "packageManager": "pnpm@9.12.3",
   "engines": {
