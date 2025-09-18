@@ -1,5 +1,5 @@
 import { authClient } from "@workspace/auth/auth-client";
-import { type AuthProvider, HttpError } from "ra-core";
+import type { AuthProvider } from "ra-core";
 
 /**
  * Better Auth integration with React Admin AuthProvider
@@ -14,22 +14,12 @@ export const authProvider: AuthProvider = {
       });
 
       if (response.error) {
-        throw new HttpError("Authentication failed", 401, {
-          message: response.error.message || "Invalid credentials",
-        });
+        throw new Error(response.error.message || "Invalid credentials");
       }
 
       return Promise.resolve();
     } catch (error) {
-      console.error("Login error:", error);
-
-      if (error instanceof HttpError) {
-        throw error;
-      }
-
-      throw new HttpError("Authentication failed", 401, {
-        message: "Login failed. Please try again.",
-      });
+      throw new Error("Login failed. Please try again.");
     }
   },
 
