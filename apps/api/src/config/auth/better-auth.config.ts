@@ -154,6 +154,15 @@ export function getConfig({
         : {}),
     },
     advanced: {
+      ...(configService.getOrThrow('app.nodeEnv', { infer: true }) !== 'production' && {
+        cookies: {
+          session_token: {
+            attributes: {
+              sameSite: 'none',
+            }
+          }
+        }
+      }),
       database: {
         generateId() {
           return uuid();
