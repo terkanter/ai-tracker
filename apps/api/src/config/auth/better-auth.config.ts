@@ -158,9 +158,9 @@ export function getConfig({
         cookies: {
           session_token: {
             attributes: {
-              sameSite: 'none',
-              secure: false,
-              httpOnly: false,
+              // sameSite: 'none',
+              // secure: false,
+              // httpOnly: false,
               domain: 'localhost'
             }
           }
