@@ -161,7 +161,7 @@ export function getConfig({
               // sameSite: 'none',
               // secure: false,
               // httpOnly: false,
-              domain: 'localhost:3000'
+              domain: 'http://localhost:3000'
             }
           }
         }
