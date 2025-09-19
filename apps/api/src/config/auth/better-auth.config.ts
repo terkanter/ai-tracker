@@ -159,6 +159,9 @@ export function getConfig({
           session_token: {
             attributes: {
               sameSite: 'none',
+              secure: false,
+              httpOnly: false,
+              domain: 'localhost'
             }
           }
         }
