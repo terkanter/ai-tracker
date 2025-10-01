@@ -70,6 +70,7 @@ export function getConfig({
     appName: appConfig.name,
     secret: authConfig.authSecret,
     baseURL: appConfig.url,
+    basePath: '/api/auth',
     plugins,
     database: new Pool({
       database: databaseConfig.database,
@@ -154,17 +155,18 @@ export function getConfig({
         : {}),
     },
     advanced: {
-      ...(configService.getOrThrow('app.nodeEnv', { infer: true }) !== 'production' && {
+      ...(configService.getOrThrow('app.nodeEnv', { infer: true }) !==
+        'production' && {
         cookies: {
           session_token: {
             attributes: {
-              // sameSite: 'none',
-              // secure: false,
-              // httpOnly: false,
-              domain: 'http://localhost:3000'
-            }
-          }
-        }
+              sameSite: 'lax',
+              secure: false,
+              httpOnly: false,
+              domain: undefined, // Явно убираем domain для локальной разработки
+            },
+          },
+        },
       }),
       database: {
         generateId() {

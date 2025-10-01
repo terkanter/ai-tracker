@@ -44,6 +44,22 @@ services:
     networks:
       - ai-tracker-back-network
 
+  redis:
+    image: redis:7.0.1-alpine
+    container_name: ai-tracker-back-redis
+    restart: unless-stopped
+    ports:
+      - '${DOCKER_REDIS_PORT}:6379'
+    environment:
+      REDIS_ARGS: '--requirepass ${REDIS_PASSWORD}'
+    volumes:
+      - ./.docker/redis_data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', '--raw', 'incr', 'ping']
+    command: 'redis-server --save 120 1 --loglevel warning'
+    networks:
+      - ai-tracker-back-network
+
   mail:
     image: axllent/mailpit:v1.25
     container_name: ai-tracker-back-mail
