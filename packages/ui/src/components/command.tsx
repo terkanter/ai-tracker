@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@workspace/ui/lib/utils";
+
 import { Command as CommandPrimitive } from "cmdk";
 import { SearchIcon } from "lucide-react";
 import type * as React from "react";

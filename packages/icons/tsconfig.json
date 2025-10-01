@@ -1,0 +1,14 @@
+{
+  "extends": "@workspace/typescript-config/library.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist",
+    "declaration": true,
+    "declarationMap": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["dist", "node_modules"]
+}

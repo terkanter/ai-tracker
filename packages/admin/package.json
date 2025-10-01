@@ -23,6 +23,7 @@
     "@t3-oss/env-core": "^0.13.8",
     "@tanstack/react-query": "catalog:",
     "@workspace/ui": "workspace:*",
+    "@workspace/icons": "workspace:*",
     "class-variance-authority": "catalog:",
     "cmdk": "^1.1.1",
     "diacritic": "^0.0.2",

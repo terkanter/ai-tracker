@@ -19,6 +19,7 @@
     "@tanstack/react-query": "catalog:",
     "@workspace/admin": "workspace:*",
     "@workspace/auth": "workspace:*",
+    "@workspace/icons": "workspace:*",
     "@workspace/ui": "workspace:*",
     "class-variance-authority": "catalog:",
     "data-generator-retail": "^5.11.2",

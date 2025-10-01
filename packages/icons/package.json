@@ -1,0 +1,35 @@
+{
+  "name": "@workspace/icons",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "lint": "biome check src/",
+    "lint:fix": "biome check src/ --write",
+    "lint:unsafe": "biome check src/ --write --unsafe",
+    "format": "biome format src/ --write",
+    "check": "biome check src/ --write",
+    "check:unsafe": "biome check src/ --write --unsafe",
+    "type-check": "tsc --noEmit"
+  },
+  "exports": {
+    "./solar": {
+      "import": "./src/solar.ts",
+      "types": "./dist/solar.ts"
+    }
+  },
+  "dependencies": {
+    "@solar-icons/react-perf": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@workspace/typescript-config": "workspace:*",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "packageManager": "pnpm@9.12.3"
+}

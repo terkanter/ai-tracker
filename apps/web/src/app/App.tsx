@@ -1,9 +1,9 @@
-import { Admin } from "@workspace/admin/admin";
 import { EditGuesser } from "@workspace/admin/edit-guesser";
 import { ListGuesser } from "@workspace/admin/list-guesser";
 import { ShowGuesser } from "@workspace/admin/show-guesser";
 import { Resource } from "ra-core";
 import { authProvider } from "./authProvider";
+import { Admin } from "./core/admin";
 import { dataProvider } from "./dataProvider";
 
 function App() {

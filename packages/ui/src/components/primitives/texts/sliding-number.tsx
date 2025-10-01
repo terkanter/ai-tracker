@@ -3,11 +3,11 @@
 import {
   type UseIsInViewOptions,
   useIsInView,
-} from "@workspace/hooks/use-is-in-view";
+} from "@workspace/ui/hooks/use-is-in-view";
 import {
   type MotionValue,
-  motion,
   type SpringOptions,
+  motion,
   useMotionValue,
   useSpring,
   useTransform,
@@ -222,12 +222,12 @@ function SlidingNumber({
   const finalIntLength = padStart
     ? Math.max(
         Math.floor(Math.abs(number)).toString().length,
-        newIntStrRaw.length,
+        newIntStrRaw?.length ?? 0,
       )
-    : newIntStrRaw.length;
+    : (newIntStrRaw?.length ?? 0);
 
   const newIntStr = padStart
-    ? newIntStrRaw.padStart(finalIntLength, "0")
+    ? (newIntStrRaw?.padStart(finalIntLength, "0") ?? "")
     : newIntStrRaw;
 
   const prevFormatted = formatNumber(prevNumberRef.current);

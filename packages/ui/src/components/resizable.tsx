@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@workspace/ui/lib/utils";
+
 import { GripVerticalIcon } from "lucide-react";
 import type * as React from "react";
 import * as ResizablePrimitive from "react-resizable-panels";

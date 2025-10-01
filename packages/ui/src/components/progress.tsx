@@ -1,30 +1,57 @@
-"use client";
-
-import * as ProgressPrimitive from "@radix-ui/react-progress";
 import { cn } from "@workspace/ui/lib/utils";
-import type * as React from "react";
+import {
+  ProgressIndicator as ProgressIndicatorPrimitive,
+  ProgressLabel as ProgressLabelPrimitive,
+  type ProgressLabelProps as ProgressLabelPrimitiveProps,
+  Progress as ProgressPrimitive,
+  type ProgressProps as ProgressPrimitiveProps,
+  ProgressTrack as ProgressTrackPrimitive,
+  type ProgressTrackProps as ProgressTrackPrimitiveProps,
+  ProgressValue as ProgressValuePrimitive,
+  type ProgressValueProps as ProgressValuePrimitiveProps,
+} from "./primitives/base/progress";
 
-function Progress({
-  className,
-  value,
-  ...props
-}: React.ComponentProps<typeof ProgressPrimitive.Root>) {
+type ProgressProps = ProgressPrimitiveProps;
+
+function Progress(props: ProgressProps) {
+  return <ProgressPrimitive {...props} />;
+}
+
+type ProgressTrackProps = ProgressTrackPrimitiveProps;
+
+function ProgressTrack({ className, ...props }: ProgressTrackProps) {
   return (
-    <ProgressPrimitive.Root
+    <ProgressTrackPrimitive
       className={cn(
         "bg-primary/20 relative h-2 w-full overflow-hidden rounded-full",
         className,
       )}
-      data-slot="progress"
       {...props}
     >
-      <ProgressPrimitive.Indicator
-        className="bg-primary h-full w-full flex-1 transition-all"
-        data-slot="progress-indicator"
-        style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
-      />
-    </ProgressPrimitive.Root>
+      <ProgressIndicatorPrimitive className="bg-primary rounded-full h-full w-full flex-1" />
+    </ProgressTrackPrimitive>
   );
 }
 
-export { Progress };
+type ProgressLabelProps = ProgressLabelPrimitiveProps;
+
+function ProgressLabel(props: ProgressLabelProps) {
+  return <ProgressLabelPrimitive className="text-sm font-medium" {...props} />;
+}
+
+type ProgressValueProps = ProgressValuePrimitiveProps;
+
+function ProgressValue(props: ProgressValueProps) {
+  return <ProgressValuePrimitive className="text-sm" {...props} />;
+}
+
+export {
+  Progress,
+  ProgressLabel,
+  ProgressTrack,
+  ProgressValue,
+  type ProgressLabelProps,
+  type ProgressProps,
+  type ProgressTrackProps,
+  type ProgressValueProps,
+};

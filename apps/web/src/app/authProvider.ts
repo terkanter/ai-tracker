@@ -8,6 +8,18 @@ import type { AuthProvider } from "ra-core";
 export const authProvider: AuthProvider = {
   login: async ({ email, password }) => {
     try {
+      // const signupResponse = await authClient.signUp.email({
+      //   email,
+      //   password,
+      //   role: "user",
+      //   name: "testuser",
+      //   username: "testuser",
+      // });
+
+      // if (signupResponse.error) {
+      //   throw new Error(signupResponse.error.message || "Invalid credentials");
+      // }
+
       const response = await authClient.signIn.email({
         email,
         password,
@@ -36,7 +48,7 @@ export const authProvider: AuthProvider = {
 
   checkAuth: async () => {
     try {
-      const session = await authClient.getSession();
+      const session = await authClient.getSession({});
 
       if (!session.data?.user) {
         throw new Error("No active session");
@@ -87,7 +99,7 @@ export const authProvider: AuthProvider = {
       // Format user data for React Admin
       const identity = {
         id: user.id,
-        fullName: user.name || "Anonymous",
+        fullName: user.username || user.firstName || "Anonymous",
         avatar: user.image || "",
         email: user.email,
         role: user.role || "user",
