@@ -1,5 +1,6 @@
 import { AuthCallback } from "@workspace/admin/authentication";
 import { i18nProvider as defaultI18nProvider } from "@workspace/admin/lib/i18nProvider";
+import { Loading } from "@workspace/admin/loading";
 import { ThemeProvider } from "@workspace/admin/theme-provider";
 import {
   CoreAdminContext,
@@ -11,7 +12,6 @@ import {
 } from "ra-core";
 // *
 import { LoginPage } from "@/resources/auth/login-page";
-
 import { Layout } from "./layout";
 
 const defaultStore = localStorageStore();
@@ -24,6 +24,7 @@ function AdminUi(props: CoreAdminUIProps) {
   return (
     <ThemeProvider>
       <CoreAdminUI
+        requireAuth
         authCallbackPage={AuthCallback}
         layout={Layout}
         loginPage={LoginPage}
@@ -48,10 +49,10 @@ export function Admin(props: CoreAdminProps) {
     error,
     i18nProvider = defaultI18nProvider,
     layout = Layout,
-    loading,
+    loading = Loading,
     loginPage = LoginPage,
     queryClient,
-    requireAuth,
+    requireAuth = true,
     store = defaultStore,
     title = "Shadcn Admin",
   } = props;

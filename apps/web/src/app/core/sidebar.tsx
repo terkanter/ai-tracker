@@ -4,14 +4,14 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarTrigger,
   useSidebar,
 } from "@workspace/ui/sidebar";
 import { Skeleton } from "@workspace/ui/skeleton";
-import { House, List, Shell } from "lucide-react";
+import { House, List } from "lucide-react";
 import {
   useCanAccess,
   useCreatePath,
@@ -34,22 +34,11 @@ export function AppSidebar() {
   };
 
   return (
-    <Sidebar collapsible="icon" variant="floating">
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
-            >
-              <Link to="/">
-                <Shell className="!size-5" />
-                <span className="text-base font-semibold">Acme Inc.</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarHeader>
+    <Sidebar
+      collapsible="icon"
+      className="top-(--header-height) h-[calc(100svh-var(--header-height))]!"
+    >
+      {/* <SidebarHeader /> */}
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent>
@@ -70,7 +59,9 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter />
+      <SidebarFooter>
+        <SidebarTrigger className="scale-125 sm:scale-100" />
+      </SidebarFooter>
     </Sidebar>
   );
 }

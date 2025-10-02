@@ -4,7 +4,6 @@ import {
   BreadcrumbPage,
 } from "@workspace/admin/breadcrumb";
 import { CreateButton } from "@workspace/admin/create-button";
-import { ExportButton } from "@workspace/admin/export-button";
 import { FilterForm } from "@workspace/admin/filter-form";
 import type { FilterElementProps } from "@workspace/admin/hooks/filter-context";
 import { FilterContext } from "@workspace/admin/hooks/filter-context";
@@ -118,7 +117,7 @@ export function ListView<RecordType extends RaRecord = RaRecord>(
           {actions ?? (
             <div className="flex items-center gap-2">
               {hasCreate ? <CreateButton /> : null}
-              <ExportButton />
+              {/* <ExportButton /> */}
             </div>
           )}
         </div>

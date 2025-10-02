@@ -1,4 +1,4 @@
-import { Translate, useTimeout } from "ra-core";
+import { useTimeout } from "ra-core";
 
 import { Spinner } from "./spinner";
 
@@ -15,12 +15,12 @@ export function Loading(props: LoadingProps) {
     <div className="flex h-full flex-col items-center justify-center" {...rest}>
       <div className="color-muted pt-1 pb-1 text-center font-sans">
         <Spinner className="width-9 height-9" size="large" />
-        <h5 className="text-secondary-foreground mt-3 text-2xl">
+        {/* <h5 className="text-secondary-foreground mt-3 text-2xl">
           <Translate i18nKey={loadingPrimary}>{loadingPrimary}</Translate>
         </h5>
         <p className="text-primary">
           <Translate i18nKey={loadingSecondary}>{loadingSecondary}</Translate>
-        </p>
+        </p> */}
       </div>
     </div>
   ) : null;

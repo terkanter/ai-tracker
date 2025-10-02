@@ -3,4 +3,14 @@
 @source "../../node_modules/@workspace/ui";
 @source "../../node_modules/@workspace/admin";
 
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
 /* @source '../../../packages/ui/src'; */
+html {
+ overscroll-behavior: none;
+}

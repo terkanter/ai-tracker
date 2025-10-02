@@ -20,6 +20,7 @@ function Button({
   const Component = asChild ? Slot : motion.button;
 
   return (
+    // @ts-expect-error
     <Component
       whileTap={{ scale: tapScale }}
       whileHover={{ scale: hoverScale }}

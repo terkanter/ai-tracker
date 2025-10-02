@@ -1,40 +1,79 @@
+"use client";
+
 import { useTheme } from "@workspace/admin/theme-provider";
 import { Button } from "@workspace/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@workspace/ui/dropdown-menu";
 import { cn } from "@workspace/ui/lib/utils";
-import { Check, Moon, Sun } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 
-export function ThemeModeToggle() {
+import { useCallback, useEffect, useRef } from "react";
+import { flushSync } from "react-dom";
+
+type Props = {
+  className?: string;
+};
+export const ThemeModeToggle = ({ className }: Props) => {
   const { theme, setTheme } = useTheme();
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    const updateTheme = () => {
+      setTheme(
+        document.documentElement.classList.contains("dark") ? "dark" : "light",
+      );
+    };
+    updateTheme();
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+    return () => observer.disconnect();
+  }, []);
+  const toggleTheme = useCallback(async () => {
+    if (!buttonRef.current) return;
+    await document.startViewTransition(() => {
+      flushSync(() => {
+        const newTheme = theme === "dark" ? "light" : "dark";
+        setTheme(newTheme);
+        document.documentElement.classList.toggle("dark");
+        localStorage.setItem("theme", newTheme ? "dark" : "light");
+      });
+    }).ready;
+    const { top, left, width, height } =
+      buttonRef.current.getBoundingClientRect();
+    const x = left + width / 2;
+    const y = top + height / 2;
+    const maxRadius = Math.hypot(
+      Math.max(left, window.innerWidth - left),
+      Math.max(top, window.innerHeight - top),
+    );
+    document.documentElement.animate(
+      {
+        clipPath: [
+          `circle(0px at ${x}px ${y}px)`,
+          `circle(${maxRadius}px at ${x}px ${y}px)`,
+        ],
+      },
+      {
+        duration: 500,
+        easing: "ease-in-out",
+        pseudoElement: "::view-transition-new(root)",
+      },
+    );
+  }, [theme]);
 
   return (
-    <DropdownMenu modal={false}>
-      <DropdownMenuTrigger asChild>
-        <Button className="hidden sm:inline-flex" size="icon" variant="ghost">
-          <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
-          <Check className={cn("ml-auto", theme !== "light" && "hidden")} />
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
-          <Check className={cn("ml-auto", theme !== "dark" && "hidden")} />
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
-          <Check className={cn("ml-auto", theme !== "system" && "hidden")} />
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Button
+      ref={buttonRef}
+      onClick={toggleTheme}
+      className={cn(className)}
+      size="icon"
+      variant="ghost"
+    >
+      {theme === "dark" ? (
+        <Sun className="size-5" />
+      ) : (
+        <Moon className="size-5" />
+      )}
+    </Button>
   );
-}
+};

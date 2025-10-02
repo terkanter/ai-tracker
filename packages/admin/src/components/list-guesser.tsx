@@ -26,7 +26,7 @@ export function ListGuesser<RecordType extends RaRecord = RaRecord>(
     debounce,
     disableAuthentication,
     disableSyncWithLocation,
-    exporter,
+    exporter = false,
     filter,
     filterDefaultValues,
     perPage,
