@@ -22,6 +22,7 @@ export function OrganizationButton(props: ButtonProps) {
       <Button
         {...props}
         variant="ghost"
+        hoverScale={1.02}
         className={cn("cursor-pointer py-0 px-1", props.className)}
       >
         <div className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground flex items-center gap-1">
@@ -41,12 +42,13 @@ export function OrganizationButton(props: ButtonProps) {
     <Button
       {...props}
       variant="ghost"
-      className={cn("cursor-pointer py-0 px-1", props.className)}
+      hoverScale={1.02}
+      className={cn("cursor-pointer py-0 px-1.5", props.className)}
     >
       <div className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground flex items-center gap-1">
-        <Avatar className="h-6 w-6 rounded-lg">
+        <Avatar className="h-6 w-6 rounded-sm">
           <AvatarImage src={data?.avatar} alt={data?.name} />
-          <AvatarFallback className="rounded-lg bg-foreground text-background">
+          <AvatarFallback className="rounded-sm bg-foreground text-background">
             O
           </AvatarFallback>
         </Avatar>

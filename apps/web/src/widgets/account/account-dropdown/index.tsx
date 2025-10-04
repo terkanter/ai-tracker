@@ -25,7 +25,7 @@ export function AccountButton(props: ButtonProps) {
 
   if (isLoading) {
     return (
-      <Avatar className="h-8 w-8 rounded-lg">
+      <Avatar className="h-8 w-8 rounded-sm">
         <AvatarFallback className="rounded-lg">U</AvatarFallback>
       </Avatar>
     );
@@ -37,13 +37,13 @@ export function AccountButton(props: ButtonProps) {
       size="icon"
       variant="ghost"
       className={cn(
-        "cursor-pointer p-0 data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground rounded-[10px]",
+        "cursor-pointer p-0 data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground rounded-md",
         props.className,
       )}
     >
-      <Avatar className={cn("h-8 w-8 rounded-lg")}>
+      <Avatar className={cn("h-8 w-8 rounded-md")}>
         <AvatarImage src={data?.avatar} alt={data?.fullName} />
-        <AvatarFallback className="rounded-lg">
+        <AvatarFallback className="rounded-sm">
           {data?.fullName?.charAt(0)}
         </AvatarFallback>
       </Avatar>

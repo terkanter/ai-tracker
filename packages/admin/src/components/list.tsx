@@ -22,6 +22,7 @@ import {
 } from "ra-core";
 import type { ReactElement, ReactNode } from "react";
 import { Link } from "react-router";
+import { ResourceHeader } from "./resource-header";
 
 export function List<RecordType extends RaRecord = RaRecord>(
   props: ListProps<RecordType>,
@@ -110,17 +111,17 @@ export function ListView<RecordType extends RaRecord = RaRecord>(
       </Breadcrumb>
 
       <FilterContext.Provider value={filters}>
-        <div className="my-2 flex flex-wrap items-start justify-between gap-2">
-          <h2 className="mb-2 text-2xl font-bold tracking-tight">
-            {finalTitle}
-          </h2>
-          {actions ?? (
-            <div className="flex items-center gap-2">
-              {hasCreate ? <CreateButton /> : null}
-              {/* <ExportButton /> */}
-            </div>
-          )}
-        </div>
+        <ResourceHeader
+          title={finalTitle}
+          actions={
+            actions ?? (
+              <>
+                {hasCreate ? <CreateButton /> : null}
+                {/* <ExportButton /> */}
+              </>
+            )
+          }
+        />
         <FilterForm />
 
         <div className={cn("my-2", props.className)}>{children}</div>

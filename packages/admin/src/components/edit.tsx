@@ -4,7 +4,6 @@ import {
   BreadcrumbPage,
 } from "@workspace/admin/breadcrumb";
 import { ShowButton } from "@workspace/admin/show-button";
-import { cn } from "@workspace/ui/lib/utils";
 import type { EditBaseProps } from "ra-core";
 import {
   EditBase,
@@ -20,6 +19,7 @@ import {
 import type { ReactNode } from "react";
 import { Link } from "react-router";
 import { DeleteButton } from "./delete-button";
+import { ResourceHeader } from "./resource-header";
 
 export interface EditProps extends EditViewProps, EditBaseProps {}
 
@@ -95,22 +95,17 @@ export function EditView({
         </BreadcrumbItem>
         <BreadcrumbPage>{recordRepresentation}</BreadcrumbPage>
       </Breadcrumb>
-      <div
-        className={cn(
-          "my-2 flex flex-wrap items-start justify-between gap-2",
-          className,
-        )}
-      >
-        <h2 className="text-2xl font-bold tracking-tight">
-          {title !== undefined ? title : context.defaultTitle}
-        </h2>
-        {actions ?? (
-          <div className="flex items-center justify-end gap-2">
-            {hasShow ? <ShowButton /> : null}
-            <DeleteButton />
-          </div>
-        )}
-      </div>
+      <ResourceHeader
+        title={title !== undefined ? title : context.defaultTitle}
+        actions={
+          actions ?? (
+            <>
+              {hasShow ? <ShowButton /> : null}
+              <DeleteButton />
+            </>
+          )
+        }
+      />
       <div className="my-2">{children}</div>
     </>
   );

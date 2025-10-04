@@ -3,7 +3,6 @@ import {
   BreadcrumbItem,
   BreadcrumbPage,
 } from "@workspace/admin/breadcrumb";
-import { cn } from "@workspace/ui/lib/utils";
 import {
   CreateBase,
   type CreateBaseProps,
@@ -16,6 +15,7 @@ import {
 } from "ra-core";
 import type { ReactNode } from "react";
 import { Link } from "react-router";
+import { ResourceHeader } from "./resource-header";
 
 export type CreateProps = CreateViewProps & CreateBaseProps;
 
@@ -84,17 +84,10 @@ export function CreateView({
           <Translate i18nKey="ra.action.create">Create</Translate>
         </BreadcrumbPage>
       </Breadcrumb>
-      <div
-        className={cn(
-          "my-2 flex flex-wrap items-start justify-between gap-2",
-          className,
-        )}
-      >
-        <h2 className="text-2xl font-bold tracking-tight">
-          {title !== undefined ? title : context.defaultTitle}
-        </h2>
-        {actions}
-      </div>
+      <ResourceHeader
+        title={title !== undefined ? title : context.defaultTitle}
+        actions={actions}
+      />
       <div className="my-2">{children}</div>
     </>
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import { SettingsOutline } from "@workspace/icons/solar";
 import { Button, type ButtonProps } from "@workspace/ui/button";
 import {
   DropdownMenu,
@@ -11,8 +12,8 @@ import {
   DropdownMenuTrigger,
 } from "@workspace/ui/dropdown-menu";
 import { cn } from "@workspace/ui/lib/utils";
-import { Check, ChevronsUpDown, Plus, Settings } from "lucide-react";
-import { type UserIdentity, useGetIdentity, useLogout } from "ra-core";
+import { Check, ChevronsUpDown, Plus } from "lucide-react";
+import { type UserIdentity, useGetIdentity } from "ra-core";
 
 export function ProjectButton(props: ButtonProps) {
   const { data, isLoading } = useGetIdentity();
@@ -21,6 +22,7 @@ export function ProjectButton(props: ButtonProps) {
     return (
       <Button
         {...props}
+        hoverScale={1.02}
         variant="ghost"
         className={cn("cursor-pointer py-0 px-1", props.className)}
       >
@@ -37,8 +39,9 @@ export function ProjectButton(props: ButtonProps) {
   return (
     <Button
       {...props}
+      hoverScale={1.02}
       variant="ghost"
-      className={cn("cursor-pointer py-0 px-1", props.className)}
+      className={cn("cursor-pointer py-0 pl-2 pr-1", props.className)}
     >
       <div className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground flex items-center gap-1">
         <div className="grid flex-1 text-left text-sm leading-tight">
@@ -58,7 +61,6 @@ export function ProjectDropdown({
     | (({ user }: { user: UserIdentity | undefined }) => React.ReactNode);
 }) {
   const { data, isLoading } = useGetIdentity();
-  const logout = useLogout();
 
   function renderChildren() {
     if (typeof children === "function") {
@@ -97,7 +99,7 @@ export function ProjectDropdown({
           <span>Create Project</span>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Settings />
+          <SettingsOutline />
           <span>Manage Projects</span>
         </DropdownMenuItem>
       </DropdownMenuContent>

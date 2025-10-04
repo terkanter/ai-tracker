@@ -19,7 +19,7 @@ import {
 
 export function AppHeader() {
   return (
-    <header className="bg-background z-50 flex w-full items-center border-b">
+    <header className="bg-background z-50 flex w-full items-center ">
       <div className="flex h-(--header-height) w-full items-center gap-2 px-4">
         <div className="flex items-center gap-4">
           <OrganizationDropdown>

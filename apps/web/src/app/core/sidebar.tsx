@@ -1,9 +1,20 @@
+import { HomeOutline } from "@workspace/icons/solar";
+import { Button } from "@workspace/ui/button";
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@workspace/ui/card";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFeature,
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -11,7 +22,7 @@ import {
   useSidebar,
 } from "@workspace/ui/sidebar";
 import { Skeleton } from "@workspace/ui/skeleton";
-import { House, List } from "lucide-react";
+import { List } from "lucide-react";
 import {
   useCanAccess,
   useCreatePath,
@@ -35,6 +46,7 @@ export function AppSidebar() {
 
   return (
     <Sidebar
+      variant="inset"
       collapsible="icon"
       className="top-(--header-height) h-[calc(100svh-var(--header-height))]!"
     >
@@ -46,6 +58,7 @@ export function AppSidebar() {
               {hasDashboard ? (
                 <DashboardMenuItem onClick={handleClick} />
               ) : null}
+              <SidebarGroupLabel>Resources</SidebarGroupLabel>
               {Object.keys(resources)
                 .filter((name) => resources[name].hasList)
                 .map((name) => (
@@ -60,7 +73,22 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <SidebarTrigger className="scale-125 sm:scale-100" />
+        <SidebarFeature className="flex-1 pb-2">
+          <Card className="w-full dark:bg-transparent">
+            <CardHeader>
+              <CardTitle>Upgrade to Pro</CardTitle>
+              <CardDescription className="text-xs text-muted-foreground">
+                Upgrade to Pro to get more features
+              </CardDescription>
+            </CardHeader>
+            <CardFooter>
+              <Button size="sm" color="primary">
+                Upgrade to Pro
+              </Button>
+            </CardFooter>
+          </Card>
+        </SidebarFeature>
+        <SidebarTrigger className="" />
       </SidebarFooter>
     </Sidebar>
   );
@@ -68,8 +96,8 @@ export function AppSidebar() {
 
 export function DashboardMenuItem({ onClick }: { onClick?: () => void }) {
   const translate = useTranslate();
-  const label = translate("ra.page.dashboard", {
-    _: "Dashboard",
+  const label = translate("ra.page.overview", {
+    _: "Overview",
   });
   const match = useMatch({ path: "/", end: true });
 
@@ -77,7 +105,8 @@ export function DashboardMenuItem({ onClick }: { onClick?: () => void }) {
     <SidebarMenuItem>
       <SidebarMenuButton asChild isActive={!!match}>
         <Link to="/" onClick={onClick}>
-          <House />
+          <HomeOutline />
+          {/* <ChartSquareOutline /> */}
           {label}
         </Link>
       </SidebarMenuButton>
